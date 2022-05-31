@@ -1,0 +1,32 @@
+<aura:component controller="CustomContactController" implements="flexipage:availableForRecordHome, force:hasRecordId" access="global">
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="contacts" type="Contact[]"/>
+    <aura:attribute name="search" type="String" default=""/>
+    <aura:attribute name="error" type="String"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:handler event="force:refreshView" action="{!c.doInit}"/>
+    <div>{!v.error}</div>
+
+    <lightning:card variant="Narrow">
+        <div class="slds-media slds-no-space slds-grow" style="background-color: rgb(241,241,241);">
+            <lightning:icon class="slds-m-right_small" iconName="standard:contact" size="small" />
+            <div class="slds-media__body slds-align-middle">Contacts</div>
+        </div> 
+        <div class="header slds-grid">
+            <div class="slds-col slds-size_1-of-8 slds-float_left">
+                <lightning:input id="searchField" label="Search By Name" value="{!v.search}"/>
+            </div>
+            <div class="slds-col" style="width: 50px;">
+                <lightning:button 
+                    class="buttons slds-m-left_small slds-m-top_large" 
+                    variant="brand" 
+                    name="Filter" 
+                    label="Filter" 
+                    onclick="{!c.handleFilterClick}" />
+            </div>
+        </div>
+        <div>
+            <lightning:datatable data="{!v.contacts}" columns="{!v.columns}" keyField="Id" hideCheckboxColumn="true"/>
+        </div>  
+    </lightning:card>
+</aura:component>	
